@@ -3,14 +3,17 @@ from flask import Flask, jsonify, request, render_template
 import mysql.connector
 from dotenv import load_dotenv
 from datetime import datetime
+from flask_cors import CORS
 
 load_dotenv()
 
 app = Flask(__name__)
+CORS(app)
 
 def get_db_connection():
     return mysql.connector.connect(
         host=os.getenv('DB_HOST', 'localhost'),
+        port=int(os.getenv('DB_PORT', 3306)),
         user=os.getenv('DB_USER', 'root'),
         password=os.getenv('DB_PASS', ''),
         database=os.getenv('DB_NAME', 'aqi_db')
